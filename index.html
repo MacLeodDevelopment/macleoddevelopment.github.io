@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Andrew MacLeod - Consultant Software Engineer</title>
+  <meta name="description" content="Portfolio website for Andrew MacLeod" />
+
+  <link rel="preload" href="/styles/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="/styles/main.css">
+  </noscript>
+
+  <!-- Minimal critical CLS-prevention inline styles only -->
+  <style>
+    /* Prevent layout shift: reserve space for header before CSS loads */
+    header {
+      min-height: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Prevent layout shift: reserve space for hero before CSS loads */
+    .hero {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      flex-wrap: nowrap;
+    }
+
+    .hero .profile {
+      flex: 0 0 auto;
+      width: clamp(96px, 18vw, 180px);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+    }
+
+    .hero .hero-text {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    /* Prevent layout shift: reserve width for year */
+    #year {
+      display: inline-block;
+      min-width: 3ch;
+      text-align: right;
+    }
+
+    /* Mobile: stack hero vertically */
+    @media (max-width: 420px) {
+      .hero {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.75rem;
+      }
+
+      .hero .profile {
+        order: -1;
+        align-self: center;
+      }
+
+      .hero .hero-text {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="/#" aria-label="Go to home"><strong>Andrew MacLeod</strong></a>
+
+    <!-- Desktop nav: visible on all sizes except the smallest -->
+    <nav class="nav-desktop" aria-label="Main navigation">
+      <ul>
+        <li><a href="/#experience">Experience</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Mobile-only JS-free hamburger: visible only at the smallest breakpoint -->
+    <details class="nav-mobile" aria-label="Mobile navigation">
+      <summary aria-haspopup="true" aria-controls="nav-list-mobile">
+        <span class="sr-only">Menu</span>
+        <svg viewBox="0 0 28 28" role="img" aria-hidden="true" focusable="false">
+          <line class="line line1" x1="4" y1="7" x2="24" y2="7"></line>
+          <line class="line line2" x1="4" y1="14" x2="24" y2="14"></line>
+          <line class="line line3" x1="4" y1="21" x2="24" y2="21"></line>
+        </svg>
+      </summary>
+      <ul id="nav-list-mobile">
+        <li><a href="/#experience">Experience</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </details>
+  </header>
+  <main class="container">
+    
+    <section class="hero" id="home">
+      <img src="/images/andrew-macleod-profile-512.jpg"
+        srcset="/images/andrew-macleod-profile-512.jpg 512w, /images/andrew-macleod-profile-360.jpg 360w, /images/andrew-macleod-profile-256.jpg 256w, /images/andrew-macleod-profile-128.jpg 128w"
+        sizes="(max-width:520px) 140px, 180px" alt="Andrew MacLeod" class="profile" width="180" height="180">
+
+      <div class="hero-text">
+        <h1>Hello! <br /> I am Andrew MacLeod <span class="sr-only">of the Clan MacLeod.</span></h1>
+        <p>and I am a Software Engineer.</p>
+      </div>
+    </section>
+
+    
+<section id="experience">
+    <h2>Experience</h2>
+
+    <p>
+        I currently work as Principal Engineer for a property-tech company in London.<br />
+        Below are some of the things I've done in my previous roles. <br />
+        You can also read more about me on 
+        <a href="https://www.linkedin.com/in/andrewmacleodnottingham"
+            target="_blank"
+            rel="noopener"
+            title="Andrew MacLeod LinkedIn Profile"
+            >LinkedIn <span class="sr-only">(opens in a new tab)</span>
+        </a>.
+    </p>
+
+    <div class="experience">
+        
+
+        <div class="experience-card">
+            <h3><a href="/experience/senior-consultant-cgi/">Senior Consultant at CGI / BJSS</a></h3>
+            <p>
+                I worked as a consultant for a number of clients including: the largest healthcare provider in the world, a national airline, the UK Government and the biggest retailer in the UK.
+            </p>
+        </div>
+
+        
+
+        <div class="experience-card">
+            <h3><a href="/experience/principal-engineer-parexel/">Principal Software Engineer at Parexel / Calyx</a></h3>
+            <p>
+                I led multiple software teams architecting and building solutions for clinical research in a highly-regulated industry.
+            </p>
+        </div>
+
+        
+
+        <div class="experience-card">
+            <h3><a href="/experience/lead-software-engineer-ideagen/">Senior/Lead Software Engineer at Ideagen</a></h3>
+            <p>
+                I worked as a senior engineer and team lead, running an agile process delivering software to the customer in an iterative way.
+            </p>
+        </div>
+
+        
+
+        <div class="experience-card">
+            <h3><a href="/experience/senior-engineer-face/">Senior Software Engineer at FACE Recording &amp; Measurement Systems</a></h3>
+            <p>
+                I worked as a senior engineer in a team, mentoring junior developers to help them improve and build software with a professional approach.
+            </p>
+        </div>
+
+        
+
+        <div class="experience-card">
+            <h3><a href="/experience/earlier-roles/">Earlier Roles - Graphic Designer to Programmer</a></h3>
+            <p>
+                My first job was doing graphic design for a financial company in London. I gradually moved into web design and subsequently web application development.
+            </p>
+        </div>
+
+        
+    </div>
+</section>
+
+<section id="about" class="about">
+    <h2>About Me</h2>
+    <p>I like to cook, read, and play retro computer games.</p>
+</section>
+
+<section id="contact" class="contact">
+    <h2>Contact</h2>
+
+    <p>Feel free to get in touch.</p>
+
+    <form id="contact-form">
+
+        <div class="form-field">
+            <label for="email">Your email</label>
+            <input id="email" name="email" type="email"  maxlength="256" required>
+        </div>
+
+        <div class="form-field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" maxlength="1000" required></textarea>
+        </div>
+
+        <div class="turnstile-container">
+            <div
+                class="cf-turnstile"
+                data-sitekey="0x4AAAAAADmqC7wRlvnimFim"
+                data-size="flexible">
+            </div>
+        </div>
+
+        <button type="submit">
+            Send
+        </button>
+
+    </form>
+
+    <p id="contact-status" aria-live="polite"></p>
+
+    <script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+        async
+        defer>
+    </script>
+
+    <script>
+
+    document
+        .getElementById("contact-form")
+        .addEventListener("submit", async (e) => {
+
+            e.preventDefault();
+
+            const form = e.target;
+            const status = document.getElementById("contact-status");
+
+            const token = document.querySelector(
+                'input[name="cf-turnstile-response"]'
+            )?.value;
+
+            if (!token) {
+                status.textContent = "Please complete the verification.";
+                return;
+            }
+
+            status.textContent = "Sending...";
+
+            try {
+
+                const response = await fetch(
+                    "https://api-email-worker.andrewmacleod-com.workers.dev",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            email: form.email.value,
+                            message: form.message.value,
+                            token: token
+                        })
+                    });
+
+                const text = await response.text();
+
+                if (response.ok) {
+
+                    status.textContent = "Message sent.";
+
+                    form.reset();
+
+                    if (window.turnstile) {
+                        turnstile.reset();
+                    }
+
+                } else {
+
+                    status.textContent = text;
+
+                }
+
+            } catch (err) {
+
+                console.error(err);
+                status.textContent = "Network error.";
+
+            }
+
+        });
+
+    </script>
+
+</section>
+
+
+
+  </main>
+
+  <footer>
+    © <span id="year"></span> Andrew MacLeod. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <script>
+  document.querySelectorAll('.nav-mobile ul a').forEach(link => {
+    link.addEventListener('click', event => {
+      const details = link.closest('.nav-mobile');
+      if (details) details.removeAttribute('open');
+
+      // Smooth scroll if the link is an anchor
+      const targetId = link.getAttribute('href');
+      if (targetId && targetId.startsWith('#')) {
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+
+</html>
