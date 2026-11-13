@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Lets the browser use a dark canvas from the very start in dark mode -->
+  <meta name="color-scheme" content="light dark" />
+  <title>Page not found - Andrew MacLeod</title>
+  <meta name="description" content="The page you asked for isn&#39;t on andrewmacleod.com." />
+
+  <link rel="preload" href="/fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/martian-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+  
+
+  <!-- Render-blocking on purpose: the browser waits for the stylesheet before its first
+       paint, so visitors never see the page unstyled. It's small and cached after the
+       first visit. -->
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="home-link" href="/"><i aria-hidden="true"></i>Andrew MacLeod</a>
+
+      <!-- Desktop nav: hidden at 640px and below -->
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <ul>
+          <li><a href="/#experience">Experience</a></li>
+          <li><a href="/#about">About</a></li>
+          <li><a href="/interests/">Interests</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile-only JS-free menu: shown at 640px and below -->
+      <details class="nav-mobile">
+        <summary aria-controls="nav-list-mobile">
+          <svg viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+            <line class="line line1" x1="0" y1="2" x2="14" y2="2"></line>
+            <line class="line line2" x1="0" y1="7" x2="14" y2="7"></line>
+            <line class="line line3" x1="0" y1="12" x2="14" y2="12"></line>
+          </svg>
+          Menu
+        </summary>
+        <nav aria-label="Main navigation">
+          <ul id="nav-list-mobile">
+            <li><a href="/#experience">Experience</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/interests/">Interests</a></li>
+            <li><a href="/#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    
+
+    <div class="sheet">
+      <div class="row">
+        <div class="page-head">
+          <a class="frame" href="/">
+            <img src="/images/andrew-macleod-profile-256.jpg"
+              srcset="/images/andrew-macleod-profile-128.jpg 128w, /images/andrew-macleod-profile-256.jpg 256w"
+              sizes="112px" alt="Andrew MacLeod, home page" width="112" height="112">
+          </a>
+          <div>
+            <p class="m">Error 404</p>
+            <h1>Page not found</h1>
+            <p class="sub">There&#39;s nothing at this address.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row sec">
+    <div class="sec-label">
+        <p class="m">Section 1</p>
+        <h2>Details</h2>
+        <p>The address may be mistyped, or the page may have moved.</p>
+        <p><a class="back-link" href="/"><span aria-hidden="true">←</span> Home</a></p>
+    </div>
+    <div class="cell">
+        <table class="specs">
+            <caption class="sr-only">Error details</caption>
+            <tbody>
+                <tr><th scope="row">Status</th><td>404 · Not found</td></tr>
+                <tr><th scope="row">Requested</th><td id="requested-path">This address</td></tr>
+            </tbody>
+        </table>
+
+        <ul class="related">
+            <li><a href="/">Home <span aria-hidden="true">→</span></a></li>
+            <li><a href="/#experience">Revision history <span aria-hidden="true">→</span></a></li>
+            <li><a href="/interests/">Interests <span aria-hidden="true">→</span></a></li>
+            <li><a href="/#contact">Contact <span aria-hidden="true">→</span></a></li>
+        </ul>
+
+        <p class="m page-note">Note 1 · There can be only one.</p>
+    </div>
+</div>
+
+<script>
+    // Show which address was asked for. textContent, never innerHTML: the path comes from the URL.
+    // decodeURI throws on a malformed address (such as a stray %), so fall back to it as typed.
+    let requested = location.pathname;
+    try { requested = decodeURI(requested); } catch { }
+    document.getElementById('requested-path').textContent = requested;
+</script>
+
+    </div>
+
+    
+  </main>
+
+  <footer class="wrap site-footer m">
+    <span>© <span id="year"></span> Andrew MacLeod. All rights reserved.</span>
+    <span>Document AM-DS-001 · Specifications subject to change</span>
+  </footer>
+
+  <script>
+    const year = new Date().getFullYear();
+    document.getElementById('year').textContent = year;
+    document.querySelectorAll('.js-year').forEach(el => el.textContent = year);
+  </script>
+
+  <script>
+  // Close the mobile menu after a link is chosen.
+  // Smooth scrolling to anchors is handled by scroll-behavior in main.css.
+  document.querySelectorAll('.nav-mobile ul a').forEach(link => {
+    link.addEventListener('click', () => {
+      const details = link.closest('.nav-mobile');
+      if (details) details.removeAttribute('open');
+    });
+  });
+  </script>
+
+</body>
+
+</html>

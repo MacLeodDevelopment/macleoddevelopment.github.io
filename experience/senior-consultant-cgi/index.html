@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Lets the browser use a dark canvas from the very start in dark mode -->
+  <meta name="color-scheme" content="light dark" />
+  <title>Senior Consultant at CGI / BJSS - Andrew MacLeod</title>
+  <meta name="description" content="Consultant for a number of clients, including the largest healthcare provider in the world, a national airline, the UK Government and the biggest retailer in the UK." />
+
+  <link rel="preload" href="/fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/martian-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+  
+
+  <!-- Render-blocking on purpose: the browser waits for the stylesheet before its first
+       paint, so visitors never see the page unstyled. It's small and cached after the
+       first visit. -->
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="home-link" href="/"><i aria-hidden="true"></i>Andrew MacLeod</a>
+
+      <!-- Desktop nav: hidden at 640px and below -->
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <ul>
+          <li><a href="/#experience">Experience</a></li>
+          <li><a href="/#about">About</a></li>
+          <li><a href="/interests/">Interests</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile-only JS-free menu: shown at 640px and below -->
+      <details class="nav-mobile">
+        <summary aria-controls="nav-list-mobile">
+          <svg viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+            <line class="line line1" x1="0" y1="2" x2="14" y2="2"></line>
+            <line class="line line2" x1="0" y1="7" x2="14" y2="7"></line>
+            <line class="line line3" x1="0" y1="12" x2="14" y2="12"></line>
+          </svg>
+          Menu
+        </summary>
+        <nav aria-label="Main navigation">
+          <ul id="nav-list-mobile">
+            <li><a href="/#experience">Experience</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/interests/">Interests</a></li>
+            <li><a href="/#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    
+
+    <div class="sheet">
+      <div class="row">
+        <div class="page-head">
+          <a class="frame" href="/">
+            <img src="/images/andrew-macleod-profile-256.jpg"
+              srcset="/images/andrew-macleod-profile-128.jpg 128w, /images/andrew-macleod-profile-256.jpg 256w"
+              sizes="112px" alt="Andrew MacLeod, home page" width="112" height="112">
+          </a>
+          <div>
+            <p class="m">Experience · Rev E</p>
+            <h1>CGI / BJSS</h1>
+            <p class="sub">Senior Software Engineering Consultant 2021 to 2026.</p>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="row sec">
+  <div class="sec-label">
+    <p class="m">Rev E</p>
+    <h2>Details</h2>
+    <table class="specs">
+      <caption class="sr-only">Role summary</caption>
+      <tbody>
+        <tr><th scope="row">Dates</th><td>2021 – 2026</td></tr>
+        <tr><th scope="row">Role</th><td>Senior consultant</td></tr>
+      </tbody>
+    </table>
+    <p><a class="back-link" href="/#experience"><span aria-hidden="true">←</span> Revision history</a></p>
+  </div>
+  <div class="cell prose">
+    <h3>Tech Stack</h3>
+<p>Azure · Blazor · C#.NET · React.js · Angular · Amazon Web Services (AWS) · Docker · Kubernetes · WSL · GitHub Actions · Azure DevOps · ASP.NET MVC · Node.js · OAuth · Azure Cosmos DB · MongoDB · Microsoft SQL Server · Entity Framework · KnockoutJS · Next.js · BUnit · Jest · MS Test · NUnit · Playwright · SpecFlow</p>
+<h2>Tech Lead for United Health Group (Optum)</h2>
+<p>Andrew was tech and team lead for a software team modernising a legacy product.</p>
+<p>He also implemented a modern security solution in response to a hostile state-sponsored cyber attack.</p>
+<h2>Senior Front-end Engineer for British Airways</h2>
+<p>As a tight deadline approached, Andrew was sent in to help a team build user interfaces as part of a large project to modernise the passenger experience.</p>
+<h2>Tech Lead for Everflow</h2>
+<p>Andrew led the build of a new B2B and B2C solution for a utility billing solutions company.</p>
+<h2>UK Government - Veterinary Medicines Directorate</h2>
+<p>Andrew took on the tech lead and platform engineer roles, analysing, troubleshooting and simplifying a problematic, overly complex system.</p>
+<h2>Potter Clarkson</h2>
+<p>Andrew was brought in as a consultant engineer to fix and modernise a broken application.</p>
+<h2>Kingspan</h2>
+<p>Andrew covered tech lead, test lead and platform engineering, extending a customer-facing website and the back-office tools used to design complex insulation for the construction industry.</p>
+<h2>Frasers Group</h2>
+<p>Andrew integrated an existing, complex e-commerce platform with a third-party payment provider, working as a full stack software engineer.</p>
+
+  </div>
+</div>
+
+    </div>
+
+    
+  </main>
+
+  <footer class="wrap site-footer m">
+    <span>© <span id="year"></span> Andrew MacLeod. All rights reserved.</span>
+    <span>Document AM-DS-001 · Specifications subject to change</span>
+  </footer>
+
+  <script>
+    const year = new Date().getFullYear();
+    document.getElementById('year').textContent = year;
+    document.querySelectorAll('.js-year').forEach(el => el.textContent = year);
+  </script>
+
+  <script>
+  // Close the mobile menu after a link is chosen.
+  // Smooth scrolling to anchors is handled by scroll-behavior in main.css.
+  document.querySelectorAll('.nav-mobile ul a').forEach(link => {
+    link.addEventListener('click', () => {
+      const details = link.closest('.nav-mobile');
+      if (details) details.removeAttribute('open');
+    });
+  });
+  </script>
+
+</body>
+
+</html>

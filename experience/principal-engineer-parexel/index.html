@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Lets the browser use a dark canvas from the very start in dark mode -->
+  <meta name="color-scheme" content="light dark" />
+  <title>Principal Software Engineer at Parexel / Calyx - Andrew MacLeod</title>
+  <meta name="description" content="Led multiple software teams architecting and building solutions for clinical research in a highly-regulated industry." />
+
+  <link rel="preload" href="/fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/martian-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+  
+
+  <!-- Render-blocking on purpose: the browser waits for the stylesheet before its first
+       paint, so visitors never see the page unstyled. It's small and cached after the
+       first visit. -->
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="home-link" href="/"><i aria-hidden="true"></i>Andrew MacLeod</a>
+
+      <!-- Desktop nav: hidden at 640px and below -->
+      <nav class="nav-desktop" aria-label="Main navigation">
+        <ul>
+          <li><a href="/#experience">Experience</a></li>
+          <li><a href="/#about">About</a></li>
+          <li><a href="/interests/">Interests</a></li>
+          <li><a href="/#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile-only JS-free menu: shown at 640px and below -->
+      <details class="nav-mobile">
+        <summary aria-controls="nav-list-mobile">
+          <svg viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+            <line class="line line1" x1="0" y1="2" x2="14" y2="2"></line>
+            <line class="line line2" x1="0" y1="7" x2="14" y2="7"></line>
+            <line class="line line3" x1="0" y1="12" x2="14" y2="12"></line>
+          </svg>
+          Menu
+        </summary>
+        <nav aria-label="Main navigation">
+          <ul id="nav-list-mobile">
+            <li><a href="/#experience">Experience</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/interests/">Interests</a></li>
+            <li><a href="/#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    
+
+    <div class="sheet">
+      <div class="row">
+        <div class="page-head">
+          <a class="frame" href="/">
+            <img src="/images/andrew-macleod-profile-256.jpg"
+              srcset="/images/andrew-macleod-profile-128.jpg 128w, /images/andrew-macleod-profile-256.jpg 256w"
+              sizes="112px" alt="Andrew MacLeod, home page" width="112" height="112">
+          </a>
+          <div>
+            <p class="m">Experience · Rev D</p>
+            <h1>Parexel / Calyx</h1>
+            <p class="sub">Principal Software Engineer 2016 to 2021.</p>
+          </div>
+        </div>
+      </div>
+
+      
+<div class="row sec">
+  <div class="sec-label">
+    <p class="m">Rev D</p>
+    <h2>Details</h2>
+    <table class="specs">
+      <caption class="sr-only">Role summary</caption>
+      <tbody>
+        <tr><th scope="row">Dates</th><td>2016 – 2021</td></tr>
+        <tr><th scope="row">Role</th><td>Principal engineer</td></tr>
+      </tbody>
+    </table>
+    <p><a class="back-link" href="/#experience"><span aria-hidden="true">←</span> Revision history</a></p>
+  </div>
+  <div class="cell prose">
+    <h3>Tech Stack</h3>
+<p>Azure · Blazor · C#.NET · Angular · HTML · CSS · SASS · JavaScript · Microsoft SQL Server · Entity Framework · NUnit · SpecFlow · Dapper ORM · Nunjucks · JAMstack · OSIsoft PI · 11ty</p>
+<h2>The Bill &amp; Melinda Gates Foundation and COVID-19</h2>
+<p>Andrew led a team tasked with designing and releasing a mobile app for use in sub-Saharan Africa, to gather information about the spread of the pandemic in countries where social distancing was not in place.</p>
+<h2>Clinical Platform</h2>
+<p>Andrew designed and built solutions for a modern clinical platform which replaced existing legacy systems. This included a pluggable UI framework for other teams to develop against, and planning months of work across ten software teams.</p>
+<h2>Sensors</h2>
+<p>Andrew was recruited to Parexel to lead a team tasked with designing and building a system to capture data from portable and wearable clinical devices at scale.</p>
+
+  </div>
+</div>
+
+    </div>
+
+    
+  </main>
+
+  <footer class="wrap site-footer m">
+    <span>© <span id="year"></span> Andrew MacLeod. All rights reserved.</span>
+    <span>Document AM-DS-001 · Specifications subject to change</span>
+  </footer>
+
+  <script>
+    const year = new Date().getFullYear();
+    document.getElementById('year').textContent = year;
+    document.querySelectorAll('.js-year').forEach(el => el.textContent = year);
+  </script>
+
+  <script>
+  // Close the mobile menu after a link is chosen.
+  // Smooth scrolling to anchors is handled by scroll-behavior in main.css.
+  document.querySelectorAll('.nav-mobile ul a').forEach(link => {
+    link.addEventListener('click', () => {
+      const details = link.closest('.nav-mobile');
+      if (details) details.removeAttribute('open');
+    });
+  });
+  </script>
+
+</body>
+
+</html>

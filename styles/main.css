@@ -1,0 +1,1554 @@
+/* -----------------------------------------
+   FONTS (self-hosted, Latin subset, see /fonts/README.txt)
+----------------------------------------- */
+@font-face {
+  font-family: "Schibsted Grotesk";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/fonts/schibsted-grotesk-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Martian Mono";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("/fonts/martian-mono-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* -----------------------------------------
+   TOKENS, COLOUR MODES
+   One accent (--orange), used as a fill only, never as text on the page
+   background, so it never has to meet text contrast on its own.
+----------------------------------------- */
+:root {
+  --bg: #e8e8e4;
+  --panel: #f5f5f2;
+  --ink: #111111;
+  --muted: #55565a;
+  --line: #111111;
+  --hair: #c9c9c3;
+  --orange: #ff5a1f;
+  --on-orange: #111111;
+  --focus: #ff5a1f;
+  --max-width: min(1200px, 94%);
+  --header-height: 52px;
+  --gap: 1.25rem;
+  --sans: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "Martian Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e0e0e;
+    --panel: #171717;
+    --ink: #ececea;
+    --muted: #a2a29d;
+    --line: #3a3a38;
+    --hair: #2a2a28;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --muted: var(--ink);
+    --hair: var(--ink);
+    --line: var(--ink);
+  }
+}
+
+@media (forced-colors: active) {
+  :root {
+    --bg: Canvas;
+    --panel: Canvas;
+    --ink: CanvasText;
+    --muted: CanvasText;
+    --line: CanvasText;
+    --hair: CanvasText;
+    --orange: Highlight;
+    --on-orange: HighlightText;
+    --focus: Highlight;
+  }
+
+  * {
+    forced-color-adjust: none;
+  }
+}
+
+/* -----------------------------------------
+   RESET / BASE
+----------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Keep anchor targets clear of the sticky header */
+  scroll-padding-top: calc(var(--header-height) + 12px);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font: 400 1rem/1.55 var(--sans);
+  color: var(--ink);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-color: var(--orange);
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* PhotoSwipe sizes its own images, so leave them alone */
+img:not(.pswp img) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+.wrap {
+  width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Small monospaced label text */
+.m {
+  font: 400 0.72rem/1.5 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0.5rem;
+  z-index: 200;
+  background: var(--orange);
+  color: var(--on-orange);
+  padding: 0.5rem 0.9rem;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+}
+
+/* -----------------------------------------
+   HEADER AND NAVIGATION
+----------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header .bar {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  height: var(--header-height);
+}
+
+.home-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.home-link i {
+  display: block;
+  width: 14px;
+  height: 14px;
+  background: var(--orange);
+}
+
+nav.nav-desktop ul {
+  display: flex;
+  height: 100%;
+}
+
+nav.nav-desktop a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1.1rem;
+  border-left: 1px solid var(--line);
+  font: 500 0.72rem var(--mono);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+nav.nav-desktop a:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+nav.nav-desktop li:last-child a {
+  background: var(--orange);
+  color: var(--on-orange);
+}
+
+nav.nav-desktop li:last-child a:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* JS-free hamburger: shown at 640px and below */
+.nav-mobile {
+  display: none;
+  position: relative;
+  align-self: center;
+}
+
+.nav-mobile summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--line);
+  padding: 0.45rem 0.7rem;
+  font: 500 0.72rem var(--mono);
+  text-transform: uppercase;
+}
+
+.nav-mobile summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-mobile summary::marker {
+  content: none;
+}
+
+.nav-mobile summary svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.nav-mobile summary svg .line {
+  stroke: currentColor;
+  stroke-width: 2.5;
+  transition: transform 0.2s ease, opacity 0.15s ease;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.nav-mobile[open] summary {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--on-orange);
+}
+
+.nav-mobile[open] summary svg .line1 {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.nav-mobile[open] summary svg .line2 {
+  opacity: 0;
+}
+
+.nav-mobile[open] summary svg .line3 {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+.nav-mobile ul {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 13rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.nav-mobile li + li {
+  border-top: 1px solid var(--hair);
+}
+
+.nav-mobile a {
+  display: block;
+  padding: 0.85rem 1rem;
+  font: 500 0.75rem var(--mono);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.nav-mobile a:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* -----------------------------------------
+   THE SHEET: a ruled panel made of rows and cells
+----------------------------------------- */
+main {
+  flex: 1;
+  padding: 1.5rem 0 0;
+}
+
+.sheet {
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.row {
+  display: grid;
+  border-bottom: 1px solid var(--line);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.cell {
+  padding: var(--gap);
+  min-width: 0;
+}
+
+.cell + .cell {
+  border-left: 1px solid var(--line);
+}
+
+/* Two equal cells side by side */
+.row.split {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Mono label line at the top of a cell: left and right parts */
+.cell-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+/* A section row: a label column on the left, content on the right */
+.row.sec {
+  grid-template-columns: 240px 1fr;
+}
+
+.sec-label {
+  padding: var(--gap);
+  border-right: 1px solid var(--line);
+}
+
+.sec-label p {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.sec-label p.m {
+  margin: 0 0 0.25rem;
+  font-size: 0.72rem;
+}
+
+.sec-body {
+  min-width: 0;
+}
+
+.sec-label table.specs {
+  margin: 1rem 0 1.25rem;
+}
+
+.sec-label .back-link {
+  margin-top: 0.25rem;
+}
+
+/* -----------------------------------------
+   HOME: TITLE BLOCK
+----------------------------------------- */
+.row.r-title {
+  grid-template-columns: 1fr 1.1fr;
+}
+
+.figure {
+  margin: 0;
+}
+
+/* Fig. 1 is a drawing: a faint grid fills the whole cell, edge to edge, behind
+   the label, photo and caption, with dimension lines along the left and bottom of
+   the photo. This keeps the 50/50 split without the photo filling its half.
+   The drawing area (.drawing) starts level with the h1 and the photo is pinned
+   to its top, so the top of the photo lines up with the name. It stretches to
+   the height of the title cell, so the two halves end level. */
+.r-title .figure {
+  --grid: color-mix(in srgb, var(--hair) 55%, transparent);
+  display: flex;
+  flex-direction: column;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+}
+
+.drawing {
+  flex: 1;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  row-gap: 1rem;
+  place-items: start center;
+  padding: 0 1.5rem 0.5rem;
+}
+
+.dwg {
+  --dim: 18px;
+  display: grid;
+  grid-template-columns: var(--dim) 1fr;
+  grid-template-rows: auto var(--dim) auto;
+  gap: 10px;
+  width: min(100%, calc(420px + var(--dim) + 10px));
+  margin: 0;
+}
+
+.dwg .frame {
+  grid-area: 1 / 2;
+}
+
+/* Dimension lines: end ticks from the borders, the line itself from ::before,
+   and the measurement on a panel-coloured background so it breaks the line. */
+.dim {
+  position: relative;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+
+.dim::before {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.dim span {
+  position: relative;
+  padding: 0 0.4rem;
+  background: var(--panel);
+  font: 400 0.62rem/1 var(--mono);
+  text-transform: uppercase;
+}
+
+.dim-h {
+  grid-area: 2 / 2;
+  border-inline: 1px solid currentColor;
+}
+
+.dim-h::before {
+  inset: 50% 0 auto;
+  height: 1px;
+}
+
+.dim-v {
+  grid-area: 1 / 1;
+  border-block: 1px solid currentColor;
+}
+
+.dim-v::before {
+  inset: 0 auto 0 50%;
+  width: 1px;
+}
+
+.dim-v span {
+  padding: 0.4rem 0;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* Scale note: bottom right of the drawing, in normal flow so it always sits
+   below the caption and wraps on very narrow screens. The negative margin takes
+   it out to the cell's content edge, past the drawing's side padding. */
+.dwg-note {
+  justify-self: end;
+  margin-right: -1.5rem;
+  text-align: right;
+  font-size: 0.62rem;
+  color: var(--muted);
+}
+
+/* If it wraps, break between the two phrases, not inside one */
+.dwg-note .nw {
+  white-space: nowrap;
+}
+
+/* Front / rear view switch. #fig-view's data-view ("front" or "rear") picks the
+   label text, caption, scale note and photo; the inline script in index.njk
+   flips it when "Fig. 1" / "Fig. 2" is clicked. */
+#fig-view[data-view="front"] .v-rear,
+#fig-view[data-view="rear"] .v-front {
+  display: none;
+}
+
+.view-toggle {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* Hover only where it's real, so a tap on a phone doesn't leave it stuck */
+@media (hover: hover) {
+  .view-toggle:hover {
+    color: var(--ink);
+    text-decoration-style: solid;
+  }
+}
+
+/* The rear photo sits over the front one and fades in. Both keep the frame's
+   black and white filter and turn to colour on hover. */
+.frame .img-rear {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease, filter 0.3s ease;
+}
+
+#fig-view[data-view="rear"] .img-rear {
+  opacity: 1;
+}
+
+/* Touch screens: a tap on the photo toggles colour (script in index.njk). The
+   class is on the figure, so it applies to both photos and survives the
+   Fig. 1 / Fig. 2 switch. No grey tap highlight on iOS. */
+#fig-view .frame {
+  -webkit-tap-highlight-color: transparent;
+}
+
+#fig-view.is-colour .frame img {
+  filter: none;
+}
+
+.frame {
+  display: block;
+  position: relative;
+  aspect-ratio: 1;
+  background: var(--bg);
+}
+
+.frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  .frame img {
+    filter: grayscale(1) brightness(0.92);
+  }
+}
+
+/* The photo turns to colour on mouse-over, and when it's a link with keyboard focus
+   (inner pages, where it links home). Hover only applies with a real mouse or
+   trackpad (hover plus a fine pointer), and not once the home page script has seen
+   a touch (.has-touch), so a tap on a phone can't leave the photo stuck in colour
+   even in a browser that wrongly reports hover. */
+.frame img {
+  transition: filter 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html:not(.has-touch) .frame:hover img {
+    filter: none;
+  }
+}
+
+a.frame:focus-visible img {
+  filter: none;
+}
+
+/* Orange crop marks on opposite corners */
+.frame::before,
+.frame::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--orange);
+}
+
+.frame::before {
+  top: -6px;
+  left: -6px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.frame::after {
+  bottom: -6px;
+  right: -6px;
+  border-left: 0;
+  border-top: 0;
+}
+
+/* Caption under the dimension line, in the photo's column so it lines up with
+   the photo's left edge */
+.dwg figcaption {
+  grid-area: 3 / 2;
+  margin-top: 0.25rem;
+}
+
+.title-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-cell h1 {
+  font-size: clamp(2.6rem, 6.4vw, 5.2rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  margin-bottom: 0.9rem;
+}
+
+.title-cell .sub {
+  font-size: 1.25rem;
+  font-weight: 500;
+  max-width: 30ch;
+  margin-bottom: 1.5rem;
+}
+
+.badge {
+  align-self: flex-start;
+  background: var(--orange);
+  color: var(--on-orange);
+  font: 500 0.72rem var(--mono);
+  text-transform: uppercase;
+  padding: 0.35rem 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Key/value table */
+table.specs {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: auto;
+}
+
+table.specs th,
+table.specs td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.55rem 0;
+  border-top: 1px solid var(--hair);
+  font-weight: 400;
+}
+
+table.specs th {
+  width: 38%;
+  padding-right: 1rem;
+  font: 400 0.72rem/1.9 var(--mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Long values (such as an address on the 404 page) wrap instead of widening the table */
+table.specs td {
+  overflow-wrap: anywhere;
+}
+
+/* -----------------------------------------
+   INNER PAGES: COMPACT TITLE BLOCK
+----------------------------------------- */
+.page-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: var(--gap);
+}
+
+.page-head .frame {
+  width: clamp(72px, 12vw, 112px);
+}
+
+.page-head .frame::before,
+.page-head .frame::after {
+  width: 14px;
+  height: 14px;
+}
+
+.page-head .frame::before {
+  top: -5px;
+  left: -5px;
+}
+
+.page-head .frame::after {
+  bottom: -5px;
+  right: -5px;
+}
+
+.page-head h1 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin: 0.35rem 0 0.5rem;
+}
+
+.page-head .sub {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+/* -----------------------------------------
+   COMPATIBILITY GRID (tech stack)
+----------------------------------------- */
+.compat {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.compat > div {
+  padding: 1.1rem var(--gap);
+  border-bottom: 1px solid var(--hair);
+}
+
+.compat > div:not(:nth-child(3n + 1)) {
+  border-left: 1px solid var(--hair);
+}
+
+.compat > div:nth-last-child(-n + 3) {
+  border-bottom: 0;
+}
+
+.compat h3 {
+  font: 500 0.72rem var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.compat li {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.1rem 0;
+}
+
+.compat li::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  background: var(--ink);
+  transform: translateY(-1px);
+}
+
+/* -----------------------------------------
+   REVISION HISTORY (experience table)
+----------------------------------------- */
+table.rev {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.rev th,
+table.rev td {
+  text-align: left;
+  vertical-align: top;
+  padding: 1rem var(--gap);
+  border-bottom: 1px solid var(--hair);
+}
+
+table.rev thead th {
+  font: 400 0.72rem var(--mono);
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-top: 1.1rem;
+  padding-bottom: 0.6rem;
+}
+
+table.rev tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+table.rev td.rv {
+  width: 4.5rem;
+}
+
+.rev-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--line);
+  font: 500 0.8rem var(--mono);
+}
+
+tr.current .rev-mark {
+  background: var(--orange);
+  color: var(--on-orange);
+  border-color: var(--orange);
+}
+
+table.rev td.dt {
+  width: 9rem;
+  white-space: nowrap;
+  font: 0.78rem/1.9 var(--mono);
+}
+
+table.rev th[scope="row"] {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+table.rev th[scope="row"] a {
+  text-decoration: none;
+}
+
+table.rev th[scope="row"] a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-decoration-thickness: 2px;
+}
+
+table.rev th[scope="row"] small {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+table.rev td.ds {
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+/* -----------------------------------------
+   NOTES AND RELATED LINKS
+----------------------------------------- */
+.notes {
+  list-style: decimal;
+  padding-left: 1.2rem;
+  margin-top: 0.9rem;
+}
+
+.notes li {
+  margin-bottom: 0.4rem;
+}
+
+.notes li::marker {
+  font: 0.72rem var(--mono);
+  color: var(--muted);
+}
+
+.related {
+  margin-top: 0.9rem;
+}
+
+.related a {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--hair);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.related li:last-child a {
+  border-bottom: 1px solid var(--hair);
+}
+
+.related a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-decoration-thickness: 2px;
+}
+
+.related a span {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* A datasheet-style footnote at the end of a cell (used on the 404 page) */
+.page-note {
+  margin-top: 1.5rem;
+}
+
+/* Back link at the foot of inner pages */
+.back-link {
+  display: inline-flex;
+  gap: 0.5rem;
+  font: 500 0.75rem var(--mono);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* -----------------------------------------
+   PROSE (Markdown experience pages, page intros)
+----------------------------------------- */
+.prose {
+  max-width: 72ch;
+}
+
+.prose > * + * {
+  margin-top: 1rem;
+}
+
+.prose h2 {
+  font-size: 1.45rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hair);
+}
+
+.prose > h2:first-child,
+.prose > h3:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.prose h3 {
+  font: 500 0.72rem var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: var(--muted);
+  margin-top: 1.5rem;
+}
+
+.prose h3 + p {
+  margin-top: 0.4rem;
+}
+
+.prose ul {
+  list-style: square;
+  padding-left: 1.2rem;
+}
+
+/* -----------------------------------------
+   CONTACT FORM
+----------------------------------------- */
+.row.order {
+  grid-template-columns: 1fr 1.6fr;
+}
+
+.order .intro p {
+  margin-top: 0.5rem;
+  color: var(--muted);
+}
+
+#contact-form {
+  display: grid;
+  gap: 0;
+}
+
+#contact-form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font: 400 0.72rem var(--mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+#contact-form input,
+#contact-form textarea {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.6rem 0.7rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 0;
+}
+
+#contact-form input:focus-visible,
+#contact-form textarea:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 0;
+}
+
+#contact-form textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+/* Reserve the widget's height so the button doesn't jump when it loads */
+.turnstile-container {
+  width: 100%;
+  min-height: 65px;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+
+#contact-form button {
+  justify-self: start;
+  padding: 0.75rem 1.4rem;
+  font: 700 1rem var(--sans);
+  color: var(--on-orange);
+  background: var(--orange);
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+#contact-form button:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+#contact-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#contact-status {
+  min-height: 1.5rem;
+  margin-top: 0.75rem;
+  color: var(--muted);
+}
+
+/* -----------------------------------------
+   FOOTER
+----------------------------------------- */
+/* Reserve width for the year, which inline JS fills in */
+#year {
+  display: inline-block;
+  min-width: 4ch;
+}
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 0.9rem 0 2rem;
+}
+
+/* -----------------------------------------
+   EXTERNAL LINK ICON
+   Only on external links that open in a new tab
+----------------------------------------- */
+a[target="_blank"][href^="http"]::after {
+  content: "";
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  margin-left: 0.3rem;
+  vertical-align: -0.05em;
+  background-color: currentColor;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='black' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M7 17L17 7M17 7H8M17 7v9'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  opacity: 0.75;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+a[target="_blank"][href^="http"]:hover::after,
+a[target="_blank"][href^="http"]:focus-visible::after {
+  transform: translate(2px, -2px);
+  opacity: 1;
+}
+
+/* -----------------------------------------
+   GALLERY GRID
+----------------------------------------- */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+  gap: var(--gap);
+}
+
+.gallery-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.gallery-card:hover {
+  border-color: var(--orange);
+  text-decoration: none;
+}
+
+.gallery-card:hover .gallery-card-title {
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-decoration-thickness: 2px;
+}
+
+.gallery-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-bottom: 1px solid var(--line);
+}
+
+.gallery-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.8rem 0.9rem 0.9rem;
+}
+
+.gallery-card-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.gallery-card-desc {
+  font: 400 0.68rem/1.5 var(--mono);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* -----------------------------------------
+   PHOTO VIEWER (photoswipe@5.4.4)
+   Script and caption markup: _includes/gallery-layout.njk.
+   PhotoSwipe's stylesheet loads before this one, so equal selectors win.
+----------------------------------------- */
+.pswp {
+  --pswp-bg: #0a0a0a;
+  --pswp-icon-color: var(--on-orange);
+  --pswp-icon-color-secondary: var(--orange);
+  --pswp-icon-stroke-width: 0;
+}
+
+/* Square orange buttons, visible on the dark backdrop in both colour modes */
+.pswp .pswp__button--close,
+.pswp .pswp__button--zoom,
+.pswp .pswp__button--arrow {
+  width: 44px;
+  height: 44px;
+  background: var(--orange);
+  opacity: 1;
+}
+
+.pswp .pswp__button--close,
+.pswp .pswp__button--zoom {
+  margin: 8px 8px 0 0;
+}
+
+.pswp .pswp__button .pswp__icn {
+  top: 6px;
+  left: 6px;
+}
+
+.pswp .pswp__button--arrow {
+  margin-top: -22px;
+}
+
+.pswp .pswp__button--arrow--prev {
+  left: 14px;
+}
+
+.pswp .pswp__button--arrow--next {
+  right: 14px;
+}
+
+.pswp .pswp__button--arrow .pswp__icn {
+  right: auto;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  transform: none;
+}
+
+@media (hover: hover) {
+  .pswp .pswp__button:hover {
+    background: #ffffff;
+  }
+}
+
+.pswp .pswp__button:disabled {
+  opacity: 0.35;
+}
+
+.pswp .pswp__preloader .pswp__icn {
+  fill: var(--orange);
+}
+
+.pswp .pswp__counter {
+  height: 44px;
+  margin: 8px 0 0 12px;
+  font: 400 0.72rem/44px var(--mono);
+  letter-spacing: 0.04em;
+  color: #f5f5f2;
+  text-shadow: none;
+  opacity: 1;
+}
+
+/* Caption: a bar with the title and a More button, and a panel above it
+   with the photo's history. It follows the site's light/dark tokens. */
+.pswp__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: var(--ink);
+}
+
+.pswp-bar,
+.pswp-panel {
+  /* Full width, with the text kept to a readable column */
+  padding-inline: max(1rem, calc((100% - 46rem) / 2));
+  background: var(--panel);
+}
+
+.pswp-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 0.6rem calc(0.6rem + env(safe-area-inset-bottom, 0px));
+  border-top: 2px solid var(--orange);
+}
+
+.pswp__caption.is-open .pswp-bar {
+  border-top: 1px solid var(--hair);
+}
+
+.pswp-title {
+  flex: 1;
+  margin: 0;
+  font: 700 1rem/1.35 var(--sans);
+  letter-spacing: -0.01em;
+}
+
+.pswp-more {
+  flex: none;
+  min-width: 4.5rem;
+  min-height: 40px;
+  padding: 0 0.8rem;
+  font: 500 0.7rem/1 var(--mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .pswp-more:hover {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--on-orange);
+  }
+}
+
+.pswp-panel {
+  max-height: min(55vh, 28rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  padding-block: 1rem 0.4rem;
+  border-top: 2px solid var(--orange);
+  scrollbar-width: thin;
+  scrollbar-color: var(--hair) transparent;
+}
+
+.pswp-panel p {
+  margin: 0 0 0.8em;
+  font: 400 0.95rem/1.6 var(--sans);
+  color: var(--ink);
+}
+
+/* Phones on their side have little height, so the panel may take more of it */
+@media (max-height: 500px) {
+  .pswp-panel {
+    max-height: 65vh;
+  }
+}
+
+/* Hidden while the photo is zoomed in (set by the script) */
+.pswp .pswp__caption.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (forced-colors: active) {
+  .pswp .pswp__button,
+  .pswp-bar {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* -----------------------------------------
+   RESPONSIVE
+----------------------------------------- */
+@media (max-width: 900px) {
+  .row.r-title,
+  .row.split,
+  .row.order,
+  .row.sec {
+    grid-template-columns: 1fr;
+  }
+
+  .cell + .cell {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .sec-label {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .r-title .dwg {
+    width: min(100%, calc(320px + var(--dim) + 10px));
+  }
+
+  .compat {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .compat > div:not(:nth-child(3n + 1)) {
+    border-left: 0;
+  }
+
+  .compat > div:nth-child(2n) {
+    border-left: 1px solid var(--hair);
+  }
+
+  .compat > div:nth-last-child(-n + 3) {
+    border-bottom: 1px solid var(--hair);
+  }
+
+  .compat > div:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  nav.nav-desktop {
+    display: none;
+  }
+
+  .nav-mobile {
+    display: block;
+  }
+
+  .compat {
+    grid-template-columns: 1fr;
+  }
+
+  .compat > div:nth-child(2n) {
+    border-left: 0;
+  }
+
+  .compat > div:nth-last-child(2) {
+    border-bottom: 1px solid var(--hair);
+  }
+
+  /* Revision history: one block per row instead of a wide table */
+  table.rev thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  table.rev tr {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    padding: 1rem var(--gap);
+    border-bottom: 1px solid var(--hair);
+  }
+
+  table.rev tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  table.rev th,
+  table.rev td {
+    display: block;
+    padding: 0;
+    border: 0;
+  }
+
+  table.rev td.rv {
+    grid-row: span 3;
+    width: auto;
+  }
+
+  table.rev td.dt,
+  table.rev td.ds {
+    width: auto;
+  }
+
+  table.rev td.ds {
+    margin-top: 0.3rem;
+  }
+
+  table.specs th {
+    width: 42%;
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --gap: 1rem;
+  }
+
+  .page-head {
+    gap: 1rem;
+  }
+
+  .cell-label {
+    flex-wrap: wrap;
+  }
+}
+
+/* -----------------------------------------
+   EASTER EGG: click or tap the home page photo five times quickly
+   Two brief flickers (the page inverts and the ruled lines flash), then a stamp
+   over the photo. Two flashes stays under the three-flashes-a-second accessibility
+   limit. Under prefers-reduced-motion the script skips the flicker.
+----------------------------------------- */
+/* Fast taps on a phone could otherwise zoom the page */
+#fig-view .frame {
+  touch-action: manipulation;
+}
+
+/* The script adds .is-zapped twice, for a few frames each. The sheet's rules are drawn
+   with --line and --hair, so overriding those flashes every rule at once. */
+html.is-zapped {
+  --line: #ffffff;
+  --hair: var(--orange);
+}
+
+/* A white layer in "difference" mode inverts the page for the flash, in either colour
+   mode. It only exists while zapped, so normal page rendering is untouched. */
+html.is-zapped body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* Centred over the photo (inside .frame), wrapping to two lines on small photos */
+.quickening-stamp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: max-content;
+  max-width: 88%;
+  padding: 1rem 1.3rem;
+  background: var(--orange);
+  color: var(--on-orange);
+  outline: 2px solid var(--on-orange);
+  outline-offset: -7px;
+  font: 500 clamp(0.85rem, 2.6vw, 1.2rem)/1.3 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+  /* On a small photo it wraps; balance splits it evenly ("There can be / only one.") */
+  text-wrap: balance;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -50%) rotate(-4deg) scale(1.25);
+  transition: opacity 0.15s ease, visibility 0.15s, transform 0.25s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+
+.quickening-stamp.is-shown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) rotate(-4deg) scale(1);
+}
+
+/* -----------------------------------------
+   REDUCED MOTION
+----------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
